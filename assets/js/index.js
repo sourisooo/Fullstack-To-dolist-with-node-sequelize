@@ -49,12 +49,8 @@ let addtask = addbuttons.forEach(button => {
 
         if(lastmodal==='task'){
 
-        let addtasktemplate = document.querySelector('#task-template');
-
-        let newtask = addtasktemplate.content.cloneNode(true);
-
-        newtask.querySelector('[slot="task-name"]').textContent = click.target.form[1].value;
-
+      let addtasktemplate = document.querySelector('#task-template');
+        
         let parents = document.querySelectorAll('.message.is-info');
 
         for (parent of parents) (listoflist.push(parent));
@@ -65,10 +61,19 @@ let addtask = addbuttons.forEach(button => {
 
         trueparent = listoflist.filter(parent => parent.children[0].innerText == lastparent)
 
-        // console.log(trueparent);
+        console.log(trueparent);
             // console.log(lastmodal);
 
-        trueparent[0].appendChild(newtask);
+        trueparent.forEach(truep => {
+            
+            let newtask = addtasktemplate.content.cloneNode(true);
+
+            newtask.querySelector('[slot="task-name"]').textContent = click.target.form[1].value;
+
+            truep.appendChild(newtask);
+
+            
+            });
 
         listoflist = [];
     
