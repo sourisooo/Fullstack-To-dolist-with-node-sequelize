@@ -17,6 +17,9 @@
 
     <!-- Custom JS -->
     <script defer src="./assets/js/index.js"></script>
+    <script defer src="./assets/js/fetchdata.js"></script>
+    
+
 </head>
 
 <body>
@@ -144,6 +147,9 @@
           <button class="button is-success">Ajouter</button>
           <button class="button close" type="button">Annuler</button>
         </div>
+
+        <input type="hidden" name="list_id">
+
       </form>
     </div>
   </div>
@@ -166,6 +172,9 @@
           <button class="button is-success">Ajouter</button>
           <button class="button close" type="button">Annuler</button>
         </div>
+
+        <input type="hidden" name="list_id">
+
       </form>
     </div>
   </div>
@@ -178,7 +187,7 @@
 
 <!-- Template pour une liste -->
 <template id="list-template">
-  <section class="message is-info" slot="list-id">
+  <section class="message is-info" slot="list-id" data-id="">
     <div class="message-header">
       <div class="list-name" slot="list-name"></div>
       <span class="icon is-clickable" slot="add-card-button"><i class="fas fa-plus"></i></span>
@@ -196,7 +205,7 @@
 
   <article class="card">
     <div class="card-header">
-      <div class="card-header-title has-text-weight-medium" slot="task-name"></div>
+      <div class="card-header-title has-text-weight-medium" slot="task-name" data-id=""></div>
       <div class="card-header-icon">
         <span class="icon has-text-success"><i class="fas fa-pencil-alt"></i></span>
         <span class="icon has-text-danger ml-1"><i class="fas fa-trash-alt"></i></span>
