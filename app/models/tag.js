@@ -1,25 +1,26 @@
 const { DataTypes, Model } = require('sequelize');
 const sequelize = require('../database/connexion');
 
-class CardHasTag extends Model {}
+class Tag extends Model {}
 
 
-CardHasTag.init(
+Tag.init(
     {
-        card_id: {
-            type: DataTypes.INTEGER,
+        name: {
+            type: DataTypes.TEXT,
             allowNull: false
         },
 
-        tag_id: {
-            type: DataTypes.INTEGER,
+        color: {
+            type: DataTypes.TEXT,
             allowNull: false,
-        }
+            defaultValue: '#ccc'
+        },
     },
     {
         sequelize: sequelize,
-        tableName: 'card_has_tag'
+        tableName: 'tag'
     });
 
 
-module.exports = CardHasTag;
+module.exports = Tag;
