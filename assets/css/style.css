@@ -24,3 +24,17 @@ section {
 article:not(:last-child) {
   margin-bottom: 20px;
 }
+
+form{
+
+  max-width: 15vw;
+
+
+}
+
+#add-list-modal3 {
+
+
+ 
+
+}
