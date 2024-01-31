@@ -1,5 +1,3 @@
-// Ton code JavaScript ici !
-
 let lastparent = '';
 let lastmodal = '';
 let listoflist = [];
@@ -404,5 +402,3 @@ let deletelist = deletelistbutton.forEach(button => {
 
 
 listenremoving();
-
-
