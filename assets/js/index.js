@@ -4,13 +4,15 @@ let lastparent = '';
 let lastmodal = '';
 let listoflist = [];
 let lastid = '';
+let lastlistid= '';
+
 
 
 function updateicon(){
 
 let cards = document.querySelectorAll('.icon.is-clickable');
 
-console.log(cards, typeof cards);
+// console.log(cards, typeof cards);
 
 let openmodal = cards.forEach( card => {
     
@@ -35,7 +37,7 @@ let closebutton = document.querySelectorAll('.delete.close');
 
 let annulerbutton = document.querySelectorAll('.button.close');
 
-// console.log(closebutton);   
+console.log(closebutton);   
 
 let closeModal = closebutton.forEach(e => {
 
@@ -121,7 +123,7 @@ let colorbutton = document.querySelectorAll('.icon.has-text-success');
 
     console.log(click.target);
 
-    lastmodal = "color";
+    lastmodal = 'color';
 
     lastid = click.target.parentNode.parentNode.parentNode.parentNode.querySelector('[slot="task-name"]').dataset.id;
 
@@ -160,10 +162,58 @@ let colorbutton = document.querySelectorAll('.icon.has-text-success');
 });
 
 
-}
+let cardtodrag = document.querySelectorAll('.card');
+
+console.log(cardtodrag);
+
+cardtodrag.forEach(e => {
+
+    e.addEventListener('mousedown', (event) => { 
+        
+        lastid = event.target.dataset.id;
+
+        lastmodal = 'drag';
+
+        console.log(event.target.dataset.color, event.target.parentElement.parentElement.parentElement.dataset.id, event.target.textContent  );
+
+    
+    })
+
+
+})
+
+let listtodragin = document.querySelectorAll('.message.is-info');
+
+console.log(listtodragin);
+
+listtodragin.forEach( e => {
+
+e.addEventListener('mouseup', async (event) => {
+
+    lastlistid = event.target.parentElement.parentElement.dataset.id;
+
+    console.log(lastlistid);
+
+    let httpResponse = await fetch(`http://localhost:5000/cards/${parseInt(lastid)}`, {
+        method: "PUT",
+        body: JSON.stringify({ list_id: parseInt(lastlistid) }),
+        headers: { "Content-Type": "application/json" }
+      });
+      let body = await httpResponse.json();
+
+      console.log(body);
+
+      if(lastmodal=='drag'){  window.location.reload();};
+
+
+    });
+
+    })
+
+    }
+
 
 updateicon();
-
 
 
 function listenadding(){
@@ -278,7 +328,7 @@ let addtask = addbuttons.forEach(button => {
 
               updateicon();
 
-        } else {
+        } else if(lastmodal=='color'){
 
             
             console.log(lastid);
@@ -294,11 +344,7 @@ let addtask = addbuttons.forEach(button => {
 
           window.location.reload();
 
-
-
-
-        }
-
+        } 
 
 });})
 
@@ -358,6 +404,5 @@ let deletelist = deletelistbutton.forEach(button => {
 
 
 listenremoving();
-
 
 
