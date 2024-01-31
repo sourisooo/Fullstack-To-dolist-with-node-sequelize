@@ -46,7 +46,13 @@ formeddata.map(list => {
 
         newtask.querySelector('[slot="task-name"]').dataset.id = task.id;
 
-        console.log(newtask.querySelector('[slot="task-name"]').dataset.id );
+        newtask.querySelector('[slot="task-name"]').dataset.color = task.color;
+
+        // console.log(newtask.querySelector('.card'));
+
+        // console.log(newtask.querySelector('[slot="task-name"]').dataset.id );
+
+        newtask.querySelector('.card').style.backgroundColor = task.color;
     
         let parents = document.querySelectorAll('.message.is-info');
 
@@ -54,9 +60,11 @@ formeddata.map(list => {
 
         trueparent = listoflist[listoflist.length-1];
 
-        // console.log(trueparent);
+    
 
         trueparent.appendChild(newtask);
+
+        // console.log(trueparent);
 
         listoflist = [];
 

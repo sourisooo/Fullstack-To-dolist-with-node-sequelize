@@ -3,6 +3,7 @@
 let lastparent = '';
 let lastmodal = '';
 let listoflist = [];
+let lastid = '';
 
 
 function updateicon(){
@@ -99,11 +100,71 @@ let openmodalbylist =
 });
 
 
+let colorbutton = document.querySelectorAll('.icon.has-text-success');
+
+// console.log(colorbutton);
+
+ colorbutton.forEach(e => {e.addEventListener('click', (click) => {
+
+    // console.log(click.target.parentNode.parentNode.parentNode.parentNode.querySelector('[slot="task-name"]').dataset.id);
+
+    // console.log(click.target.parentElement.parentElement.parentElement.parentElement.innerText);
+
+    // console.log(click.target.parentElement.parentElement.parentElement.parentElement.style.backgroundColor);
+
+    let modal = document.querySelector('#add-list-modal3');
+
+    modal.classList.add('is-active');
+
+    
+    lastparent = click.target.parentNode.parentNode.parentNode.parentNode;
+
+    console.log(click.target);
+
+    lastmodal = "color";
+
+    lastid = click.target.parentNode.parentNode.parentNode.parentNode.querySelector('[slot="task-name"]').dataset.id;
+
+    let canvas = document.querySelector('canvas');
+    console.log(canvas);
+    let ctx = canvas.getContext('2d');
+
+    let image = new Image();
+    image.onload = () => {
+    ctx.drawImage(image, 0, -50);};
+
+    image.src = './assets/image/palette.jfif';
+
+    canvas.addEventListener('click',  (event) => {
+        let x = event.offsetX;
+        let y = event.offsetY;
+  
+        let imageData = ctx.getImageData(x, y, 1, 1);
+        let data = imageData.data;
+  
+        let red = data[0];
+        let green = data[1];
+        let blue = data[2];
+  
+        let hexColor = '#' + red.toString(16) + green.toString(16) + blue.toString(16);
+
+        lastparent.style.backgroundColor = hexColor;
+
+        console.log(lastparent);
+
+
+});
+
+
+})
+});
 
 
 }
 
 updateicon();
+
+
 
 function listenadding(){
 
@@ -165,12 +226,16 @@ let addtask = addbuttons.forEach(button => {
 
 
         listoflist = [];
-    
-        listenremoving();
+
+
+            fetchdata();
+
+            window.location.reload();
+
     
             } 
         
-        else {
+        else if (lastmodal==='list'){
 
 
             let addlisttemplate = document.querySelector('#list-template');
@@ -212,6 +277,25 @@ let addtask = addbuttons.forEach(button => {
             window.location.reload();
 
               updateicon();
+
+        } else {
+
+            
+            console.log(lastid);
+            console.log(lastparent.style.backgroundColor);
+
+
+        const httpResponse = await fetch(`http://localhost:5000/cards/${parseInt(lastid)}`, {
+            method: "PUT",
+            body: JSON.stringify({ color: lastparent.style.backgroundColor }),
+            headers: { "Content-Type": "application/json" }
+          });
+          const body = await httpResponse.json();
+
+          window.location.reload();
+
+
+
 
         }
 
@@ -274,3 +358,6 @@ let deletelist = deletelistbutton.forEach(button => {
 
 
 listenremoving();
+
+
+
