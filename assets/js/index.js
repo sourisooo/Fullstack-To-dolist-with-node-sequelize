@@ -3,7 +3,11 @@ let lastmodal = '';
 let listoflist = [];
 let lastid = '';
 let lastlistid= '';
-
+let dragid = '';
+let dragoutdated = {};
+let dragupdated = {};
+let listoudated = '';
+let listupdated = '';
 
 
 function updateicon(){
@@ -172,9 +176,18 @@ cardtodrag.forEach(e => {
 
         lastmodal = 'drag';
 
-        console.log(event.target.dataset.color, event.target.parentElement.parentElement.parentElement.dataset.id, event.target.textContent  );
+        dragoutdated = {color: event.target.dataset.color, list_id: parseInt(event.target.parentElement.parentElement.parentElement.dataset.id), content: event.target.textContent  }
 
-    
+        listoudated = parseInt(event.target.parentElement.parentElement.parentElement.dataset.id);
+
+        // console.log(event.target.dataset.color, event.target.parentElement.parentElement.parentElement.dataset.id, event.target.textContent  );
+
+        // console.log(event.target.parentElement.parentElement.parentElement.dataset.id);
+
+        console.log(event.target.textContent );
+
+        console.log(dragoutdated);
+
     })
 
 
@@ -207,6 +220,53 @@ e.addEventListener('mouseup', async (event) => {
     });
 
     })
+
+
+let cardtodragin = document.querySelectorAll('.card')
+
+console.log(cardtodragin)
+
+cardtodragin.forEach( e => {
+
+    e.addEventListener('mouseup', async (event) => {
+
+        dragid = event.target.parentElement.parentElement.querySelector('[slot="task-name"]').dataset.id;
+
+        dragupdated = {color: event.target.dataset.color, list_id: parseInt(event.target.parentElement.parentElement.parentElement.dataset.id), content: event.target.textContent  }
+
+        listupdated = parseInt(event.target.parentElement.parentElement.parentElement.dataset.id);
+
+        dragupdated.list_id = listoudated;
+
+        dragoutdated.list_id = listupdated;
+        
+        console.log(dragupdated );
+    
+        let httpResponse = await fetch(`http://localhost:5000/cards/${parseInt(lastid)}`, {
+            method: "PUT",
+            body: JSON.stringify(dragupdated),
+            headers: { "Content-Type": "application/json" }
+          });
+          let body = await httpResponse.json();
+    
+          console.log(body);
+
+          let httpResponse2 = await fetch(`http://localhost:5000/cards/${parseInt(dragid)}`, {
+            method: "PUT",
+            body: JSON.stringify(dragoutdated),
+            headers: { "Content-Type": "application/json" }
+          });
+          let body2 = await httpResponse2.json();
+    
+          console.log(body2);
+    
+          if(lastmodal=='drag'){  window.location.reload();};
+    
+    
+        });
+
+})
+
 
     }
 
