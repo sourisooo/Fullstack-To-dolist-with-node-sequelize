@@ -206,7 +206,7 @@ e.addEventListener('mouseup', async (event) => {
     console.log(lastlistid);
 
     let httpResponse = await fetch(`http://localhost:5000/cards/${parseInt(lastid)}`, {
-        method: "PUT",
+        method: "PATCH",
         body: JSON.stringify({ list_id: parseInt(lastlistid) }),
         headers: { "Content-Type": "application/json" }
       });
@@ -243,7 +243,7 @@ cardtodragin.forEach( e => {
         console.log(dragupdated );
     
         let httpResponse = await fetch(`http://localhost:5000/cards/${parseInt(lastid)}`, {
-            method: "PUT",
+            method: "PATCH",
             body: JSON.stringify(dragupdated),
             headers: { "Content-Type": "application/json" }
           });
@@ -252,7 +252,7 @@ cardtodragin.forEach( e => {
           console.log(body);
 
           let httpResponse2 = await fetch(`http://localhost:5000/cards/${parseInt(dragid)}`, {
-            method: "PUT",
+            method: "PATCH",
             body: JSON.stringify(dragoutdated),
             headers: { "Content-Type": "application/json" }
           });
