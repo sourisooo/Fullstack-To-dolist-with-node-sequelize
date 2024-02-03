@@ -230,6 +230,8 @@ cardtodragin.forEach( e => {
 
     e.addEventListener('mouseup', async (event) => {
 
+        lastmodal = 'drop';
+
         dragid = event.target.parentElement.parentElement.querySelector('[slot="task-name"]').dataset.id;
 
         dragupdated = {color: event.target.dataset.color, list_id: parseInt(event.target.parentElement.parentElement.parentElement.dataset.id), content: event.target.textContent  }
@@ -260,7 +262,7 @@ cardtodragin.forEach( e => {
     
           console.log(body2);
     
-          if(lastmodal=='drag'){  window.location.reload();};
+          if(lastmodal=='drop'){  window.location.reload();};
     
     
         });
